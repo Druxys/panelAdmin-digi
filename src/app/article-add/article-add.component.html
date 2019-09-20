@@ -1,0 +1,45 @@
+<div class="example-container mat-elevation-z8">
+  <div class="example-loading-shade"
+       *ngIf="isLoadingResults">
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+  </div>
+  <div class="button-row">
+    <a mat-flat-button color="primary" [routerLink]="['/articles']"><mat-icon>list</mat-icon></a>
+  </div>
+  <mat-card class="example-card">
+    <form [formGroup]="articleForm" (ngSubmit)="onFormSubmit()">
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Titre Article" formControlName="title"
+               [errorStateMatcher]="matcher">
+        <mat-error>
+          <span *ngIf="!articleForm.get('title').valid && articleForm.get('title').touched">Please enter Product Name</span>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Sous-titre" formControlName="subtitle"
+               [errorStateMatcher]="matcher">
+        <mat-error>
+          <span *ngIf="!articleForm.get('subtitle').valid && articleForm.get('subtitle').touched">Please enter Product Description</span>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Type d'article" formControlName="art_type"
+               [errorStateMatcher]="matcher">
+        <mat-error>
+          <span *ngIf="!articleForm.get('art_type').valid && articleForm.get('art_type').touched">Please enter Product Description</span>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+      <input matInput placeholder="Contenu" formControlName="content"
+             [errorStateMatcher]="matcher">
+      <mat-error>
+        <span *ngIf="!articleForm.get('content').valid && articleForm.get('content').touched">Please enter Product Description</span>
+      </mat-error>
+    </mat-form-field>
+        <input type="file" (change)="onFileSelected($event)">
+      <div class="button-row">
+        <button type="submit" [disabled]="!articleForm.valid" mat-flat-button color="primary"><mat-icon>save</mat-icon></button>
+      </div>
+    </form>
+  </mat-card>
+</div>
