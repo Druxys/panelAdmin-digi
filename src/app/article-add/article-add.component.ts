@@ -1,11 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../api.service';
-import { ImgService } from '../img.service';
 import { FormControl, FormGroupDirective, FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
-import {MatDialogRef} from '@angular/material';
-import {forkJoin} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 
 /** Error when invalid control is dirty, touched, or submitted. */
@@ -27,13 +24,14 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./article-add.component.css']
 })
 export class ArticleAddComponent implements OnInit {
-  selectedFile = null;
+  selectedFile: File = null;
   matcher = new MyErrorStateMatcher();
   articleForm: FormGroup;
   title = '';
   art_type: '';
   subtitle = '';
   content = '';
+  articleImage = '';
   isLoadingResults = false;
   constructor(private router: Router, private api: ApiService, private formBuilder: FormBuilder, private http: HttpClient) { }
 
@@ -43,24 +41,19 @@ export class ArticleAddComponent implements OnInit {
       subtitle : [null, Validators.required],
       art_type : [null, Validators.required],
       content : [null, Validators.required],
+      articleImage : [null]
     });
   }
 
-  // onFileSelected(event) {
-  //   this.selectedFile = event.target.files[0];
-  // }
-
-  // onUpload() {
-  //   this.http.post('localhost')
-  // }
-
   onFormSubmit() {
+    // const fd = new FormData();
+    // this.articleForm.setValue();
     this.isLoadingResults = true;
     console.log(this.articleForm.value);
     this.api.addArticle(this.articleForm.value)
-      .subscribe((res: any) => {
+      .subscribe((res) => {
         console.log(res);
-        const id = res.id;
+        // const id = res._id;
         this.isLoadingResults = false;
         this.router.navigate(['/articles']);
       }, (err: any) => {

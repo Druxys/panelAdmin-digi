@@ -27,6 +27,7 @@ export class ArticleDetailComponent implements OnInit {
     this.isLoadingResults = true;
     this.api.deleteArticle(_id)
       .subscribe(res => {
+        console.log(res);
           this.isLoadingResults = false;
           this.router.navigate(['/articles']);
         }, (err) => {

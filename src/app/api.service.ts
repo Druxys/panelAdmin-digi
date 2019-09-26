@@ -6,7 +6,8 @@ import { Article } from './article';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
-    .set('Access-Control-Allow-Origin', '*')
+    .append('Access-Control-Allow-Origin', '*')
+    .append('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization,  X-Auth')
 };
 const apiUrl = 'http://localhost:3000/articles';
 
@@ -51,15 +52,15 @@ export class ApiService {
 
   updateArticle(_id: any, article: Article): Observable<any> {
     const url = `${apiUrl}/${_id}`;
-    return this.http.patch(apiUrl, article, httpOptions).pipe(
-      tap(_ => console.log(`updated product id=${_id}`)),
+    return this.http.patch(url, article, httpOptions).pipe(
+      tap(_ => console.log(`updated product id=${article._id}`)),
       catchError(this.handleError<any>('updateProduct'))
     );
   }
 
   deleteArticle(_id: any): Observable<Article> {
     const url = `${apiUrl}/${_id}`;
-    return this.http.delete<Article>(apiUrl, httpOptions).pipe(
+    return this.http.delete<Article>(url, httpOptions).pipe(
       tap(_ => console.log(`deleted product id=${_id}`)),
       catchError(this.handleError<Article>('deleteProduct'))
     );

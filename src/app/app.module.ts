@@ -26,6 +26,7 @@ import {FileSelectDirective} from 'ng2-file-upload';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { JwtModule } from '@auth0/angular-jwt';
+import { FileUploadComponent } from './file-upload/file-upload.component';
 
 
 const routes: Routes = [
@@ -62,6 +63,7 @@ const routes: Routes = [
     FileSelectDirective,
     LoginComponent,
     SignupComponent,
+    FileUploadComponent,
   ],
   imports: [
     BrowserModule,
