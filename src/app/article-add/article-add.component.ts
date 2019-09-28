@@ -1,8 +1,8 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import { Router } from '@angular/router';
-import { ApiService } from '../api.service';
-import { FormControl, FormGroupDirective, FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {ApiService} from '../api.service';
+import {FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
+import {ErrorStateMatcher} from '@angular/material/core';
 import {HttpClient} from '@angular/common/http';
 
 /** Error when invalid control is dirty, touched, or submitted. */
@@ -13,10 +13,6 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   }
 }
 
-// export interface TypeArticle {
-//   value: string;
-//   viewValue: string;
-// }
 
 @Component({
   selector: 'app-article-add',
@@ -24,14 +20,14 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./article-add.component.css']
 })
 export class ArticleAddComponent implements OnInit {
-  selectedFile: File = null;
+  articleImage: File = null;
   matcher = new MyErrorStateMatcher();
   articleForm: FormGroup;
-  title = '';
-  art_type: '';
-  subtitle = '';
-  content = '';
-  articleImage = '';
+  title = [''];
+  art_type: [''];
+  subtitle = [''];
+  content = [''];
+  // articleImage = [''];
   isLoadingResults = false;
   constructor(private router: Router, private api: ApiService, private formBuilder: FormBuilder, private http: HttpClient) { }
 
@@ -41,16 +37,28 @@ export class ArticleAddComponent implements OnInit {
       subtitle : [null, Validators.required],
       art_type : [null, Validators.required],
       content : [null, Validators.required],
-      articleImage : [null]
+      // articleImage : [null]
     });
   }
 
+  selectImage(event) {
+    if (event.target.files.length > 0) {
+      this.articleImage = event.target.files[0];
+    }
+  }
+
   onFormSubmit() {
-    // const fd = new FormData();
-    // this.articleForm.setValue();
+
+    const formData = new FormData();
+    formData.append('title', this.articleForm.get('title').value);
+    formData.append('art_type', this.articleForm.get('art_type').value);
+    formData.append('subtitle', this.articleForm.get('subtitle').value);
+    formData.append('content', this.articleForm.get('content').value);
+    formData.append('articleImage', this.articleImage);
     this.isLoadingResults = true;
-    console.log(this.articleForm.value);
-    this.api.addArticle(this.articleForm.value)
+    console.dir(this.articleForm.value);
+    console.dir(formData);
+    this.api.addArticle(formData)
       .subscribe((res) => {
         console.log(res);
         // const id = res._id;

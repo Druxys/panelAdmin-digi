@@ -20,7 +20,8 @@ export class FileUploadComponent implements ControlValueAccessor  {
 
   @HostListener('change', ['$event.target.files']) emitFiles( event: FileList ) {
     const file = event && event.item(0);
-    this.onChange(file);
+    this.onChange(event);
+    console.log(file);
     this.file = file;
   }
 

@@ -3,6 +3,7 @@ import { Observable, of, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap, map } from 'rxjs/operators';
 import { Article } from './article';
+import {Form} from '@angular/forms';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -43,9 +44,9 @@ export class ApiService {
     );
   }
 
-  addArticle(article: Article): Observable<Article> {
-    return this.http.post<Article>(apiUrl, article, httpOptions).pipe(
-      tap((art: Article) => console.log(`added product w/ id=${article._id}`)),
+  addArticle(article: FormData): Observable<Article> {
+    return this.http.post<Article>(apiUrl, article).pipe(
+      tap((art: Article) => console.log(`added product w/ id=${article}`)),
       catchError(this.handleError<Article>('addProduct'))
     );
   }
