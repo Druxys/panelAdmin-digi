@@ -27,6 +27,7 @@ import {LoginComponent} from './login/login.component';
 import {SignupComponent} from './signup/signup.component';
 import {JwtModule} from '@auth0/angular-jwt';
 import {FileUploadComponent} from './file-upload/file-upload.component';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 const routes: Routes = [
   {
@@ -91,6 +92,7 @@ const routes: Routes = [
     MatDialogModule,
     MatProgressBarModule,
     MatListModule,
+    FontAwesomeModule,
     // JwtModule.forRoot({
     //   config: {
     //     tokenGetter: function  tokenGetter() {

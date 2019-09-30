@@ -4,6 +4,7 @@ import {ApiService} from '../api.service';
 import {FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
 import {HttpClient} from '@angular/common/http';
+import {faUpload} from '@fortawesome/free-solid-svg-icons/faUpload';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -20,6 +21,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./article-add.component.css']
 })
 export class ArticleAddComponent implements OnInit {
+  upload = faUpload;
   articleImage: File = null;
   matcher = new MyErrorStateMatcher();
   articleForm: FormGroup;
@@ -29,14 +31,16 @@ export class ArticleAddComponent implements OnInit {
   content = [''];
   // articleImage = [''];
   isLoadingResults = false;
-  constructor(private router: Router, private api: ApiService, private formBuilder: FormBuilder, private http: HttpClient) { }
+
+  constructor(private router: Router, private api: ApiService, private formBuilder: FormBuilder, private http: HttpClient) {
+  }
 
   ngOnInit() {
     this.articleForm = this.formBuilder.group({
-      title : [null, Validators.required],
-      subtitle : [null, Validators.required],
-      art_type : [null, Validators.required],
-      content : [null, Validators.required],
+      title: [null, Validators.required],
+      subtitle: [null, Validators.required],
+      art_type: [null, Validators.required],
+      content: [null, Validators.required],
       // articleImage : [null]
     });
   }

@@ -43,3 +43,10 @@
 .container {
   height: 100%;
 }
+.file-upload input[type='file'] {
+  display: none;
+}
+
+fa-icon {
+  padding: 1.5vh;
+}
