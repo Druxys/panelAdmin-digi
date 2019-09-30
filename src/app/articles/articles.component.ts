@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../api.service';
-import { Article } from '../article';
+import {Component, OnInit, Input} from '@angular/core';
+import {ApiService} from '../api.service';
+import {Article} from '../article';
 import {AuthService} from '../auth.service';
 
 @Component({
@@ -8,12 +8,16 @@ import {AuthService} from '../auth.service';
   templateUrl: './articles.component.html',
   styleUrls: ['./articles.component.css']
 })
+
+
 export class ArticlesComponent implements OnInit {
   displayedColumns: string[] = ['title', 'created_at', 'updated_at'];
   data;
   check;
   isLoadingResults = true;
-  constructor(private api: ApiService, private auth: AuthService) { }
+
+  constructor(private api: ApiService, private auth: AuthService) {
+  }
 
   ngOnInit() {
     this.api.getArticles()

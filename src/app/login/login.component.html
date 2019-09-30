@@ -1,18 +1,16 @@
-<form [formGroup]="form">
-  <fieldset>
-    <legend>Login</legend>
-    <div class="form-field">
-      <label>Email:</label>
-      <input name="email" formControlName="email">
+<div class="container">
+  <form id="login" class="text-center border border-light p-5" [formGroup]="form">
+    <label for="email"></label>
+    <input name="email" id="email" formControlName="email" class="form-control mb-4"
+           placeholder="Email">
+    <label for="password"></label>
+    <input name="password" id="password" formControlName="password"
+           type="password" class="form-control mb-4" placeholder="Mot de passe">
+    <div class="g-recaptcha" data-sitekey="6LcAsLoUAAAAALuWbgtdco4bgMi5qWXTqJokXRqU"></div>
+    <div class="form-buttons">
+      <button type="submit" name="submit" class="btn btn-info btn-block"
+              (click)="login()">Login
+      </button>
     </div>
-    <div class="form-field">
-      <label>Password:</label>
-      <input name="password" formControlName="password"
-             type="password">
-    </div>
-  </fieldset>
-  <div class="form-buttons">
-    <button class="button button-primary"
-            (click)="login()">Login</button>
-  </div>
-</form>
+  </form>
+</div>
