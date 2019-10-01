@@ -9,7 +9,15 @@ const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
     .append('Access-Control-Allow-Origin', '*')
     .append('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization,  X-Auth')
+    .append('Authorization', 'Bearer' + sessionStorage.getItem('token'))
 };
+
+const httpHeaders = {
+  headers: new HttpHeaders()
+    .append('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization,  X-Auth')
+    .append('Authorization', 'Bearer' + sessionStorage.getItem('token'))
+};
+
 const apiUrl = 'http://localhost:3000/articles';
 
 @Injectable({
@@ -45,7 +53,7 @@ export class ApiService {
   }
 
   addArticle(article: FormData): Observable<Article> {
-    return this.http.post<Article>(apiUrl, article).pipe(
+    return this.http.post<Article>(apiUrl, article, httpHeaders).pipe(
       tap((art: Article) => console.log(`added product w/ id=${article}`)),
       catchError(this.handleError<Article>('addProduct'))
     );

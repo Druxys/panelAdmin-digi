@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../api.service';
 import { Article } from '../article';
 import {AuthService} from '../auth.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-articles',
@@ -13,17 +14,26 @@ export class ArticlesComponent implements OnInit {
   data;
   check;
   isLoadingResults = true;
-  constructor(private api: ApiService, private auth: AuthService) { }
+  constructor(private api: ApiService, private auth: AuthService,  private router: Router) { }
 
   ngOnInit() {
-    this.api.getArticles()
-      .subscribe((res: any) => {
-        this.data = res.articles;
-        console.log(this.data);
-        this.isLoadingResults = false;
-      }, err => {
-        console.log(err);
-        this.isLoadingResults = false;
-      });
+    if (this.auth.isUserLoggedIn() == true) {
+      this.api.getArticles()
+        .subscribe((res: any) => {
+          this.data = res.articles;
+          console.log(this.data);
+          this.isLoadingResults = false;
+        }, err => {
+          console.log(err);
+          this.isLoadingResults = false;
+        });
+    } else {
+      this.router.navigateByUrl('/login');
+    }
+  }
+
+  logout() {
+    this.auth.logOut();
+    this.router.navigateByUrl('/login');
   }
 }
