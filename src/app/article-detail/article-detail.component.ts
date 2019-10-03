@@ -14,7 +14,9 @@ export class ArticleDetailComponent implements OnInit {
   // article: Article = { id: '', title: '', content: '', subtitle: '', art_type: '', created_at: null, updated_at: null };
   article: any = [];
   isLoadingResults = true;
+
   constructor(private route: ActivatedRoute, private api: ApiService, private router: Router, private auth: AuthService) { }
+
 
   getArticleDetails(_id: any) {
     this.api.getArticle(_id)
@@ -25,11 +27,12 @@ export class ArticleDetailComponent implements OnInit {
         this.isLoadingResults = false;
       });
   }
+
   deleteArticle(_id) {
     this.isLoadingResults = true;
     this.api.deleteArticle(_id)
       .subscribe(res => {
-        console.log(res);
+          console.log(res);
           this.isLoadingResults = false;
           this.router.navigate(['/articles']);
         }, (err) => {
@@ -38,6 +41,7 @@ export class ArticleDetailComponent implements OnInit {
         }
       );
   }
+
   ngOnInit() {
     if (this.auth.isUserLoggedIn() == true) {
       this.getArticleDetails(this.route.snapshot.params._id);

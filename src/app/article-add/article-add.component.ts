@@ -4,7 +4,9 @@ import {ApiService} from '../api.service';
 import {FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
 import {HttpClient} from '@angular/common/http';
+import {faUpload} from '@fortawesome/free-solid-svg-icons/faUpload';
 import {AuthService} from '../auth.service';
+
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -21,6 +23,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./article-add.component.css']
 })
 export class ArticleAddComponent implements OnInit {
+  upload = faUpload;
   articleImage: File = null;
   matcher = new MyErrorStateMatcher();
   articleForm: FormGroup;

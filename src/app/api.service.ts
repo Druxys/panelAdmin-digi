@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { catchError, tap, map } from 'rxjs/operators';
-import { Article } from './article';
+import {Injectable} from '@angular/core';
+import {Observable, of, throwError} from 'rxjs';
+import {HttpClient, HttpHeaders, HttpErrorResponse} from '@angular/common/http';
+import {catchError, tap, map} from 'rxjs/operators';
+import {Article} from './article';
 import {Form} from '@angular/forms';
 
 const httpOptions = {
@@ -25,7 +25,8 @@ const apiUrl = 'http://localhost:3000/articles';
 })
 export class ApiService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {

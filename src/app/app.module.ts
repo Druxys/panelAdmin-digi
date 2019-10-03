@@ -1,12 +1,12 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
-import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ArticlesComponent } from './articles/articles.component';
-import { ArticleDetailComponent } from './article-detail/article-detail.component';
-import { ArticleAddComponent } from './article-add/article-add.component';
-import { ArticleEditComponent } from './article-edit/article-edit.component';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {HttpClientModule} from '@angular/common/http';
+import {AppComponent} from './app.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {ArticlesComponent} from './articles/articles.component';
+import {ArticleDetailComponent} from './article-detail/article-detail.component';
+import {ArticleAddComponent} from './article-add/article-add.component';
+import {ArticleEditComponent} from './article-edit/article-edit.component';
 import {RouterModule, Routes} from '@angular/router';
 import {AppRoutingModule, routingComponents} from './app-routing.module';
 import {
@@ -20,37 +20,38 @@ import {
   MatCardModule,
   MatFormFieldModule, MatDialogModule, MatProgressBarModule, MatListModule
 } from '@angular/material';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ToastrModule} from 'ngx-toastr';
 import {FileSelectDirective} from 'ng2-file-upload';
-import { LoginComponent } from './login/login.component';
-import { SignupComponent } from './signup/signup.component';
-import { JwtModule } from '@auth0/angular-jwt';
-import { FileUploadComponent } from './file-upload/file-upload.component';
-
+import {LoginComponent} from './login/login.component';
+import {SignupComponent} from './signup/signup.component';
+import {JwtModule} from '@auth0/angular-jwt';
+import {FileUploadComponent} from './file-upload/file-upload.component';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 const routes: Routes = [
   {
     path: 'articles',
     component: ArticlesComponent,
-    data: { title: 'List of Articles' }
+    data: {title: 'List of Articles'}
   },
   {
     path: 'article-details/:id',
     component: ArticleDetailComponent,
-    data: { title: 'Article Details' }
+    data: {title: 'Article Details'}
   },
   {
     path: 'article-add',
     component: ArticleAddComponent,
-    data: { title: 'Add Article' }
+    data: {title: 'Add Article'}
   },
   {
     path: 'article-edit/:id',
     component: ArticleEditComponent,
-    data: { title: 'Edit Article' }
+    data: {title: 'Edit Article'}
   },
-  { path: '',
+  {
+    path: '',
     redirectTo: '/articles',
     pathMatch: 'full'
   }
@@ -91,6 +92,7 @@ const routes: Routes = [
     MatDialogModule,
     MatProgressBarModule,
     MatListModule,
+    FontAwesomeModule,
     // JwtModule.forRoot({
     //   config: {
     //     tokenGetter: function  tokenGetter() {
@@ -103,4 +105,5 @@ const routes: Routes = [
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

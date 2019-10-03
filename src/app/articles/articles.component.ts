@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../api.service';
-import { Article } from '../article';
+import {Component, OnInit, Input} from '@angular/core';
+import {ApiService} from '../api.service';
+import {Article} from '../article';
 import {AuthService} from '../auth.service';
 import {Router} from '@angular/router';
 
@@ -9,12 +9,16 @@ import {Router} from '@angular/router';
   templateUrl: './articles.component.html',
   styleUrls: ['./articles.component.css']
 })
+
+
 export class ArticlesComponent implements OnInit {
   displayedColumns: string[] = ['title', 'created_at', 'updated_at'];
   data;
   check;
   isLoadingResults = true;
+
   constructor(private api: ApiService, private auth: AuthService,  private router: Router) { }
+
 
   ngOnInit() {
     if (this.auth.isUserLoggedIn() == true) {
