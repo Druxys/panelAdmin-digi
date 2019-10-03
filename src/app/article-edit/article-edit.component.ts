@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ApiService } from '../api.service';
 import { FormControl, FormGroupDirective, FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
+import {AuthService} from '../auth.service';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -28,16 +29,20 @@ export class ArticleEditComponent implements OnInit {
   content = '';
   isLoadingResults = false;
   private edit;
-  constructor(private router: Router, private route: ActivatedRoute, private api: ApiService, private formBuilder: FormBuilder) { }
+  constructor(private router: Router, private route: ActivatedRoute, private api: ApiService, private formBuilder: FormBuilder, private auth: AuthService) { }
 
   ngOnInit() {
-    this.getArticle(this.route.snapshot.params._id);
-    this.articleForm = this.formBuilder.group({
-      title : ['', Validators.required],
-      content : ['', Validators.required],
-      subtitle : ['', Validators.required],
-      art_type : ['', Validators.required],
-    });
+    if (this.auth.isUserLoggedIn() == true) {
+      this.getArticle(this.route.snapshot.params._id);
+      this.articleForm = this.formBuilder.group({
+        title : ['', Validators.required],
+        content : ['', Validators.required],
+        subtitle : ['', Validators.required],
+        art_type : ['', Validators.required],
+      });
+    } else {
+      this.router.navigateByUrl('/login');
+    }
   }
 
   getArticle(_id: any) {
@@ -59,16 +64,6 @@ export class ArticleEditComponent implements OnInit {
   onFormSubmit() {
     this.isLoadingResults = true;
     console.dir([this.articleForm.value]);
-    // this.edit = [{
-    //   propName: 'title',
-    //   value: this.articleForm.get('title'),
-    //   propName: 'content',
-    //   value: this.articleForm.get('content'),
-    //   propName: 'subtitle',
-    //   value: this.articleForm.get('subtitle'),
-    //   propName: 'art_type',
-    //   value: this.articleForm.get('art_type'),
-    // }];
     this.api.updateArticle(this.route.snapshot.params._id, this.articleForm.value)
       .subscribe((res: any) => {
           const id = this.route.snapshot.params._id;

@@ -2,13 +2,20 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 import {User} from './user';
-import {tap} from 'rxjs/operators';
+import {map, tap} from 'rxjs/operators';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
-    .set('Access-Control-Allow-Origin', '*')
+    .append('Access-Control-Allow-Origin', '*')
+    .append('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization,  X-Auth')
 };
 const apiUrl = 'http://localhost:3000/users';
+
+export class JwtResponse {
+  constructor(
+    public jwttoken: string,
+  ) {}
+}
 
 @Injectable({
   providedIn: 'root'
@@ -18,25 +25,31 @@ export class AuthService {
   constructor(private http: HttpClient) {
   }
 
-  login(email: string, password: string ) {
-    return this.http.post<User>('/users/login', {email, password});
-    // this is just the HTTP call,
-    // we still need to handle the reception of the token
-    //   .shareReplay();
+  login(identifiant: User) {
+    return this.http.post<User>(apiUrl + '/login', identifiant)
+      .pipe(map(
+        userData => {
+          sessionStorage.setItem('email', identifiant.email);
+          const tokenStr = 'Bearer ' + userData.token;
+          sessionStorage.setItem('token', tokenStr);
+          return userData;
+        }));
   }
 
+  isUserLoggedIn() {
+    const user = sessionStorage.getItem('token');
+    console.log(!(user === null));
+    return !(user === null);
+  }
+
+  logOut() {
+    sessionStorage.removeItem('email');
+    sessionStorage.removeItem('token');
+  }
   // register(email: string, password: string) {
   //   return this.http.post<{access_token: string}>(apiUrl + '/register', {email, password}).pipe(tap(res => {
   //     this.login(email, password);
   //   }));
   // }
   //
-  // logout() {
-  //   localStorage.removeItem('token');
-  // }
-  //
-  // public get loggedIn(): boolean {
-  //   return localStorage.getItem('token') !==  null;
-  // }
-
 }

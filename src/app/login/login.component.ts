@@ -25,12 +25,12 @@ export class LoginComponent implements OnInit {
     const val = this.form.value;
 
     if (val.email && val.password) {
-      this.authService.login(val.email, val.password)
+      this.authService.login(this.form.value)
         .subscribe(
           (res) => {
             console.log(res);
             console.log('User is logged in');
-            this.router.navigateByUrl('/');
+            this.router.navigateByUrl('/articles');
           }
         );
     }

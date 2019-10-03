@@ -8,6 +8,9 @@
       <mat-icon>add</mat-icon>
     </a>
   </div>
+  <div class="button-row">
+    <a mat-flat-button color="primary" (click)="logout()"><mat-icon>vpn_key</mat-icon></a>
+  </div>
   <div class="mat-elevation-z8">
     <div *ngIf="data">
       <table mat-table [dataSource]="data" class="example-table"

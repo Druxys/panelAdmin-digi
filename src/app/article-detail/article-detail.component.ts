@@ -1,7 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {ApiService} from '../api.service';
-import {Article} from '../article';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ApiService } from '../api.service';
+import { Article } from '../article';
+import {AuthService} from '../auth.service';
+import {FormBuilder} from '@angular/forms';
 
 @Component({
   selector: 'app-article-detail',
@@ -13,8 +15,8 @@ export class ArticleDetailComponent implements OnInit {
   article: any = [];
   isLoadingResults = true;
 
-  constructor(private route: ActivatedRoute, private api: ApiService, private router: Router) {
-  }
+  constructor(private route: ActivatedRoute, private api: ApiService, private router: Router, private auth: AuthService) { }
+
 
   getArticleDetails(_id: any) {
     this.api.getArticle(_id)
@@ -41,6 +43,10 @@ export class ArticleDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getArticleDetails(this.route.snapshot.params._id);
+    if (this.auth.isUserLoggedIn() == true) {
+      this.getArticleDetails(this.route.snapshot.params._id);
+    } else {
+      this.router.navigateByUrl('/login');
+    }
   }
 }

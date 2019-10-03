@@ -5,6 +5,8 @@ import {FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validat
 import {ErrorStateMatcher} from '@angular/material/core';
 import {HttpClient} from '@angular/common/http';
 import {faUpload} from '@fortawesome/free-solid-svg-icons/faUpload';
+import {AuthService} from '../auth.service';
+
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -32,17 +34,22 @@ export class ArticleAddComponent implements OnInit {
   // articleImage = [''];
   isLoadingResults = false;
 
-  constructor(private router: Router, private api: ApiService, private formBuilder: FormBuilder, private http: HttpClient) {
-  }
+  constructor(private router: Router, private api: ApiService, private formBuilder: FormBuilder, private http: HttpClient,
+              private auth: AuthService) { }
 
   ngOnInit() {
-    this.articleForm = this.formBuilder.group({
-      title: [null, Validators.required],
-      subtitle: [null, Validators.required],
-      art_type: [null, Validators.required],
-      content: [null, Validators.required],
-      // articleImage : [null]
-    });
+    if (this.auth.isUserLoggedIn() == true) {
+      this.articleForm = this.formBuilder.group({
+        title : [null, Validators.required],
+        subtitle : [null, Validators.required],
+        art_type : [null, Validators.required],
+        content : [null, Validators.required],
+        // articleImage : [null]
+      });
+    } else {
+      this.router.navigateByUrl('/login');
+    }
+
   }
 
   selectImage(event) {
