@@ -18,7 +18,7 @@ const httpHeaders = {
     .append('Authorization', 'Bearer' + sessionStorage.getItem('token'))
 };
 
-const apiUrl = 'http://localhost:3000/articles';
+const apiUrl = 'http://digiandco.net/articles';
 
 @Injectable({
   providedIn: 'root'
