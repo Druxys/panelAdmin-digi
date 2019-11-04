@@ -28,6 +28,7 @@ import {SignupComponent} from './signup/signup.component';
 import {JwtModule} from '@auth0/angular-jwt';
 import {FileUploadComponent} from './file-upload/file-upload.component';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 
 const routes: Routes = [
   {
@@ -87,7 +88,6 @@ const routes: Routes = [
     MatCardModule,
     AppRoutingModule,
     MatFormFieldModule,
-    RouterModule.forRoot([]),
     ToastrModule.forRoot(),
     MatDialogModule,
     MatProgressBarModule,
@@ -102,7 +102,7 @@ const routes: Routes = [
     //   }
     // })
   ],
-  providers: [],
+  providers: [{provide: HashLocationStrategy}],
   bootstrap: [AppComponent]
 })
 export class AppModule {
