@@ -9,7 +9,7 @@ const httpOptions = {
     .append('Access-Control-Allow-Origin', '*')
     .append('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization,  X-Auth')
 };
-const apiUrl = 'http://localhost:3000/users';
+const apiUrl = 'http://digiandco.net/users';
 
 export class JwtResponse {
   constructor(
