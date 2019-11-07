@@ -9,13 +9,13 @@ const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
     .append('Access-Control-Allow-Origin', '*')
     .append('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization,  X-Auth')
-    .append('Authorization', 'Bearer' + sessionStorage.getItem('token'))
+    .append('Authorization', sessionStorage.getItem('token'))
 };
 
 const httpHeaders = {
   headers: new HttpHeaders()
     .append('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization,  X-Auth')
-    .append('Authorization', 'Bearer ' + sessionStorage.getItem('token'))
+    .append('Authorization', sessionStorage.getItem('token'))
 };
 
 const apiUrl = 'http://digiandco.net/articles';
@@ -31,6 +31,7 @@ export class ApiService {
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       // TODO: send the error to remote logging infrastructure
+      console.log(sessionStorage.getItem('token'))
       console.error(error); // log to console instead
       // Let the app keep running by returning an empty result.
       return of(result as T);
@@ -62,7 +63,7 @@ export class ApiService {
 
   updateArticle(_id: any, article: Article): Observable<any> {
     const url = `${apiUrl}/${_id}`;
-    return this.http.patch(url, article, httpOptions).pipe(
+    return this.http.patch(url, article, httpHeaders).pipe(
       tap(_ => console.log(`updated product id=${article._id}`)),
       catchError(this.handleError<any>('updateProduct'))
     );
@@ -70,7 +71,7 @@ export class ApiService {
 
   deleteArticle(_id: any): Observable<Article> {
     const url = `${apiUrl}/${_id}`;
-    return this.http.delete<Article>(url, httpOptions).pipe(
+    return this.http.delete<Article>(url, httpHeaders).pipe(
       tap(_ => console.log(`deleted product id=${_id}`)),
       catchError(this.handleError<Article>('deleteProduct'))
     );
