@@ -20,9 +20,9 @@
         <dt>Content:</dt>
         <dd>{{articl.content}}</dd>
         <dt>Created at:</dt>
-        <dd>{{articl.created_at }}</dd>
+        <dd>{{articl.created_at | date :'dd/MM/yy'}}</dd>
         <dt>Updated At:</dt>
-        <dd>{{articl.updated_at}}</dd>
+        <dd>{{articl.updated_at| date :'dd/MM/yy'}}</dd>
       </dl>
     </mat-card-content>
     <mat-card-actions>

@@ -15,7 +15,7 @@ const httpOptions = {
 const httpHeaders = {
   headers: new HttpHeaders()
     .append('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization,  X-Auth')
-    .append('Authorization', 'Bearer' + sessionStorage.getItem('token'))
+    .append('Authorization', 'Bearer ' + sessionStorage.getItem('token'))
 };
 
 const apiUrl = 'http://digiandco.net/articles';
